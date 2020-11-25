@@ -8,6 +8,8 @@ use App\Exceptions\IncorrectUrlException;
 use App\Http\Requests\BookmarkStoreRequest;
 use App\Models\Bookmark;
 use App\Services\BookmarkStoreService;
+use GuzzleHttp\Exception\ConnectException;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
@@ -31,8 +33,12 @@ class BookmarkController extends Controller
      */
     public function search(Request $request)
     {
-        $bookmarks = Bookmark::search($request->input('search'))
-            ->paginate(10);
+        try {
+            $bookmarks = Bookmark::search($request->input('search'))
+                ->paginate(10);
+        } catch (ConnectException $exception) {
+            throw new \Exception('Search engine is not configured');
+        }
 
         return view('search', compact('bookmarks'));
     }
