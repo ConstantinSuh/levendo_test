@@ -8,6 +8,7 @@ use App\Exceptions\IncorrectUrlException;
 use App\Http\Requests\BookmarkStoreRequest;
 use App\Models\Bookmark;
 use App\Services\BookmarkStoreService;
+use Illuminate\Http\Request;
 
 class BookmarkController extends Controller
 {
@@ -22,6 +23,18 @@ class BookmarkController extends Controller
             ->paginate(10);
 
         return view('index', compact('bookmarks'));
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function search(Request $request)
+    {
+        $bookmarks = Bookmark::search($request->input('search'))
+            ->paginate(10);
+
+        return view('search', compact('bookmarks'));
     }
 
     /**

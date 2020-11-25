@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => ''], function (Router $router) {
     $router->get('/', 'BookmarkController@index');
+    $router->get('/search', 'BookmarkController@search');
     $router->get('/create', 'BookmarkController@create');
     $router->post('create', 'BookmarkController@store');
     $router->delete('/', 'BookmarkController@delete');

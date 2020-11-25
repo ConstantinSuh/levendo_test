@@ -12,7 +12,7 @@ class BookmarkStoreRequest extends \Illuminate\Foundation\Http\FormRequest
         return [
             'url' => [
                 'required',
-//                Rule::unique('bookmarks', 'url'),
+                Rule::unique('bookmarks', 'url'),
             ],
         ];
     }
