@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+
+Route::group(['prefix' => ''], function (Router $router) {
+    $router->get('/', 'BookmarkController@index');
+    $router->get('/create', 'BookmarkController@create');
+    $router->post('create', 'BookmarkController@store');
+    $router->delete('/', 'BookmarkController@delete');
+    $router->get('/{id}', 'BookmarkController@show')
+        ->name('bookmark.show');
 });
